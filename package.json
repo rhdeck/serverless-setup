@@ -1,0 +1,23 @@
+{
+  "name": "serverless-setup",
+  "version": "1.0.0",
+  "description": "Utility for setting up a serverless config",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhdeck/serverless-setup.git"
+  },
+  "keywords": [
+    "serverless",
+    "cloudformation"
+  ],
+  "author": "Ray Deck",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rhdeck/serverless-setup/issues"
+  },
+  "homepage": "https://github.com/rhdeck/serverless-setup#readme"
+}
