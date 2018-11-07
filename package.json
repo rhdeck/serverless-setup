@@ -19,5 +19,12 @@
   "bugs": {
     "url": "https://github.com/rhdeck/serverless-setup/issues"
   },
-  "homepage": "https://github.com/rhdeck/serverless-setup#readme"
+  "homepage": "https://github.com/rhdeck/serverless-setup#readme",
+  "dependencies": {
+    "aws-sdk": "^2.350.0",
+    "commander": "^2.19.0"
+  },
+  "bin": {
+    "serverless-setup": "cli.js"
+  }
 }
