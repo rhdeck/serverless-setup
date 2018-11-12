@@ -11,15 +11,11 @@ const makeConfig = async ({ currentPath = process.cwd() }) => {
   //open the package.json\
   const packagePath = Path.join(currentPath, "package.json");
   if (fs.existsSync(packagePath)) {
-    const p = JSON.parse(fs.readFileSync(packagePath, { encoding: "UTF8" }));
-    const s = p.serverless;
-    if (s) {
-      Object.entries(s).forEach(([k, v]) => {
-        o[k] = v;
-      });
-    }
+    const { name, version, serverless } = JSON.parse(
+      fs.readFileSync(packagePath, { encoding: "UTF8" })
+    );
+    o = { ...o, name, version, ...serverless };
   }
-  console.log("o is ", o);
   return o;
 };
 const writeConfig = (
