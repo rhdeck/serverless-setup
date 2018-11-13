@@ -22,7 +22,8 @@
   "homepage": "https://github.com/rhdeck/serverless-setup#readme",
   "dependencies": {
     "aws-sdk": "^2.350.0",
-    "commander": "^2.19.0"
+    "commander": "^2.19.0",
+    "serverless-resources": "rhdeck/serverless-resources"
   },
   "bin": {
     "serverless-setup": "cli.js"
