@@ -13,6 +13,7 @@ const getAccountID = async () => {
 const makeConfig = async ({
   currentPath = process.cwd(),
   getMyResources,
+  ignoreResources = false,
   ...cmd
 }) => {
   let awsAccountId = await getAccountID();
@@ -34,13 +35,21 @@ const makeConfig = async ({
           //Make sure its config is up to date
           path = resolve(path);
           const basePath = lstatSync(path).isDirectory ? path : dirname(path);
-          let config = await makeConfig({ ...cmd, currentPath: basePath });
+          let config = await makeConfig({
+            ...cmd,
+            currentPath: basePath,
+            ignoreResources
+          });
           if (!existsSync(join(basePath, "config.json")))
             writeConfig(config, basePath);
-          let r = {
-            ...config,
-            ...(await getResources({ ...cmd, path: basePath }))
-          };
+          let r = ignoreResources
+            ? {
+                ...config
+              }
+            : {
+                ...config,
+                ...(await getResources({ ...cmd, path: basePath }))
+              };
           o[k] = r;
         }
       }
