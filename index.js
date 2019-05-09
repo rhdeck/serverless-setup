@@ -14,6 +14,7 @@ const makeConfig = async ({
   currentPath = process.cwd(),
   getMyResources,
   ignoreResources = false,
+  stage = "dev",
   ...cmd
 }) => {
   let awsAccountId = await getAccountID();
@@ -29,7 +30,8 @@ const makeConfig = async ({
     o = { ...o, name, version };
     if (rawServerless) {
       let { dependencies, ...serverless } = rawServerless;
-      o = { ...o, ...serverless };
+      let stagedServerless = serverless[stage] ? serverless[stage] : {};
+      o = { ...o, ...serverless, ...stagedServerless };
       if (dependencies) {
         for (let [k, path] of Object.entries(dependencies)) {
           //Make sure its config is up to date
