@@ -40,7 +40,8 @@ const makeConfig = async ({
           let config = await makeConfig({
             ...cmd,
             currentPath: basePath,
-            ignoreResources
+            ignoreResources,
+            stage
           });
           if (!existsSync(join(basePath, "config.json")))
             writeConfig(config, basePath);
@@ -50,14 +51,17 @@ const makeConfig = async ({
               }
             : {
                 ...config,
-                ...(await getResources({ ...cmd, path: basePath }))
+                ...(await getResources({ ...cmd, path: basePath, stage }))
               };
           o[k] = r;
         }
       }
     }
     if (getMyResources) {
-      o = { ...o, ...(await getResources({ cmd, path: currentPath })) };
+      o = {
+        ...o,
+        ...(await getResources({ ...cmd, path: currentPath, stage }))
+      };
     }
   }
   process.chdir(oldPath);
