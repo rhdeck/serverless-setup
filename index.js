@@ -66,7 +66,7 @@ const makeConfig = async ({
     }
     o = Object.entries(o).reduce((out, [key, value]) => {
       if (typeof value === "string") {
-        const newValue = mustache.render(value, { source: o, output: out });
+        const newValue = mustache.render(value, { ...o, output: out });
         return { ...out, [key]: newValue };
       } else {
         return { ...out, [key]: value };
