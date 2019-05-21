@@ -2,6 +2,7 @@ const { STS } = require("aws-sdk");
 const { join, resolve, dirname } = require("path");
 const { readFileSync, writeFileSync, lstatSync, existsSync } = require("fs");
 const { getResources } = require("serverless-resources");
+const mustache = require("mustache");
 let cachedAccountId = null;
 const getAccountID = async () => {
   if (!cachedAccountId) {
@@ -63,6 +64,14 @@ const makeConfig = async ({
         ...(await getResources({ ...cmd, path: currentPath, stage }))
       };
     }
+    o = Object.entries(o).reduce((out, [key, value]) => {
+      if (typeof value === "string") {
+        const newValue = mustache.render(value, { source: o, output: out });
+        return { ...out, [key]: newValue };
+      } else {
+        return { ...out, [key]: newValue };
+      }
+    }, {});
   }
   process.chdir(oldPath);
   return o;
