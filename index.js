@@ -69,7 +69,7 @@ const makeConfig = async ({
         const newValue = mustache.render(value, { source: o, output: out });
         return { ...out, [key]: newValue };
       } else {
-        return { ...out, [key]: newValue };
+        return { ...out, [key]: value };
       }
     }, {});
   }
