@@ -11,7 +11,11 @@ commander
     "-t --stage <stage>",
     "Stack stage to check against. Defaul value is dev"
   )
-  .option("-f --file-name", "File to write output (default config.json)")
+  .option("-a --aws-profile <profile>", "Named AWS Profile")
+  .option(
+    "-f --file-name [filename]",
+    "File to write output (default config.json)"
+  )
   .option(
     "-s --standard-output",
     "Write to standard output instead of config.json"
@@ -22,12 +26,13 @@ commander
       targetPath,
       fileName,
       standardOutput,
+      awsProfile,
       stage = "dev"
     }) => {
       fileName = fileName && "config.json";
       targetPath = targetPath && process.cwd();
       try {
-        const c = await makeConfig({ currentPath, stage });
+        const c = await makeConfig({ currentPath, stage, awsProfile });
         if (standardOutput) {
           console.log(JSON.stringify(c, null, 2));
         } else {

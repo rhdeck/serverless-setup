@@ -1,4 +1,5 @@
-const { STS } = require("aws-sdk");
+const { configAWS } = require('serverless-stage')
+const AWS, { STS } = require("aws-sdk");
 const { join, resolve, dirname } = require("path");
 const { readFileSync, writeFileSync, lstatSync, existsSync } = require("fs");
 const { getResources } = require("serverless-resources");
@@ -16,9 +17,11 @@ const makeConfig = async ({
   getMyResources,
   ignoreResources = false,
   stage = "dev",
+  awsProfile,
   ...cmd
 }) => {
   let awsAccountId = await getAccountID();
+  configAWS(AWS, awsProfile)
   const oldPath = process.cwd();
   process.chdir(currentPath);
   let o = { awsAccountId };
@@ -42,7 +45,8 @@ const makeConfig = async ({
             ...cmd,
             currentPath: basePath,
             ignoreResources,
-            stage
+            stage,
+            awsProfile
           });
           if (!existsSync(join(basePath, "config.json")))
             writeConfig(config, basePath);
@@ -52,7 +56,7 @@ const makeConfig = async ({
               }
             : {
                 ...config,
-                ...(await getResources({ ...cmd, path: basePath, stage }))
+                ...(await getResources({ ...cmd, path: basePath, stage, awsProfile }))
               };
           o[k] = r;
         }
@@ -61,7 +65,7 @@ const makeConfig = async ({
     if (getMyResources) {
       o = {
         ...o,
-        ...(await getResources({ ...cmd, path: currentPath, stage }))
+        ...(await getResources({ ...cmd, path: currentPath, stage, awsProfile }))
       };
     }
     o = Object.entries(o).reduce((out, [key, value]) => {
