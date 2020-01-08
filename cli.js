@@ -20,6 +20,10 @@ commander
     "-s --standard-output",
     "Write to standard output instead of config.json"
   )
+  .option(
+    "-n --name <stackname>",
+    "Name of the stack/application (e.g. privilege, test-a, etc)"
+  )
   .action(
     async ({
       currentPath,
@@ -27,12 +31,13 @@ commander
       fileName,
       standardOutput,
       awsProfile,
-      stage = "dev"
+      stage = "dev",
+      name
     }) => {
       fileName = fileName && "config.json";
       targetPath = targetPath && process.cwd();
       try {
-        const c = await makeConfig({ currentPath, stage, awsProfile });
+        const c = await makeConfig({ currentPath, stage, awsProfile, name });
         if (standardOutput) {
           console.log(JSON.stringify(c, null, 2));
         } else {

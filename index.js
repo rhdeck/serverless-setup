@@ -19,6 +19,7 @@ const makeConfig = async ({
   ignoreResources = false,
   stage = "dev",
   awsProfile,
+  name,
   ...cmd
 }) => {
   let awsAccountId = await getAccountID();
@@ -36,7 +37,8 @@ const makeConfig = async ({
     if (rawServerless) {
       let { dependencies, ...serverless } = rawServerless;
       let stagedServerless = serverless[stage] ? serverless[stage] : {};
-      o = { ...o, ...serverless, ...stagedServerless };
+      let namedServerless = name && serverless[name] ? serverless[name] : {};
+      o = { ...o, ...serverless, ...stagedServerless, ...namedServerless };
       if (dependencies) {
         for (let [k, path] of Object.entries(dependencies)) {
           //Make sure its config is up to date
@@ -47,7 +49,8 @@ const makeConfig = async ({
             currentPath: basePath,
             ignoreResources,
             stage,
-            awsProfile
+            awsProfile,
+            name
           });
           if (!existsSync(join(basePath, "config.json")))
             writeConfig(config, basePath);
