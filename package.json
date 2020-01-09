@@ -1,6 +1,6 @@
 {
   "name": "serverless-setup",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Utility for setting up a serverless config",
   "main": "index.js",
   "scripts": {
