@@ -39,8 +39,6 @@ const makeConfig = async ({
       let stagedServerless = serverless[stage] ? serverless[stage] : {};
       let namedServerless =
         fromName && serverless[fromName] ? serverless[fromName] : {};
-      console.log("Working with name", fromName);
-      console.log("And found namedServerless", namedServerless);
       o = { ...o, ...serverless, ...stagedServerless, ...namedServerless };
       if (dependencies) {
         for (let [k, path] of Object.entries(dependencies)) {
