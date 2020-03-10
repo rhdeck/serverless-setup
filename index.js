@@ -1,9 +1,9 @@
-const { configAWS } = require("serverless-stage");
+const { configAWS } = require("@raydeck/serverless-stage");
 const AWS = require("aws-sdk");
 const { STS } = AWS;
 const { join, resolve, dirname } = require("path");
 const { readFileSync, writeFileSync, lstatSync, existsSync } = require("fs");
-const { getResources } = require("serverless-resources");
+const { getResources } = require("@raydeck/serverless-resources");
 const mustache = require("mustache");
 let cachedAccountId = null;
 const getAccountID = async () => {
