@@ -1,6 +1,6 @@
 {
   "name": "@raydeck/serverless-setup",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Utility for setting up a serverless config",
   "main": "index.js",
   "scripts": {
@@ -21,15 +21,10 @@
   },
   "homepage": "https://github.com/rhdeck/serverless-setup#readme",
   "dependencies": {
-    "aws-sdk": "^2.350.0",
-    "commander": "^2.19.0",
-    "mustache": "^3.0.1"
+    "@raydeck/serverless-resources": "^2.0.0",
+    "@raydeck/serverless-stage": "^2.0.0"
   },
   "bin": {
     "serverless-setup": "cli.js"
-  },
-  "dependencies": {
-    "@raydeck/serverless-resources": "^2.0.0",
-    "@raydeck/serverless-stage": "^2.0.0"
   }
 }
