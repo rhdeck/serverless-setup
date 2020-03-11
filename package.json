@@ -20,7 +20,7 @@
     "url": "https://github.com/rhdeck/serverless-setup/issues"
   },
   "homepage": "https://github.com/rhdeck/serverless-setup#readme",
-  "devDependencies": {
+  "dependencies": {
     "aws-sdk": "^2.350.0",
     "commander": "^2.19.0",
     "mustache": "^3.0.1"
