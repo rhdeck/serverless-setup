@@ -1,6 +1,6 @@
 {
   "name": "@raydeck/serverless-setup",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Utility for setting up a serverless config",
   "main": "index.js",
   "scripts": {
