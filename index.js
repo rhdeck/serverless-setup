@@ -35,7 +35,8 @@ const makeConfig = async ({
     );
     o = { ...o, name, version };
     if (rawServerless) {
-      let { dependencies, ...serverless } = rawServerless;
+      let { dependencies, name: serverlessName, ...serverless } = rawServerless;
+      if (serverlessName) o.name = serverlessName;
       let stagedServerless = serverless[stage] ? serverless[stage] : {};
       let namedServerless =
         fromName && serverless[fromName] ? serverless[fromName] : {};
@@ -51,13 +52,13 @@ const makeConfig = async ({
             ignoreResources,
             stage,
             awsProfile,
-            name: fromName
+            name: fromName,
           });
           if (!existsSync(join(basePath, "config.json")))
             writeConfig(config, basePath);
           let r = ignoreResources
             ? {
-                ...config
+                ...config,
               }
             : {
                 ...config,
@@ -65,8 +66,8 @@ const makeConfig = async ({
                   ...cmd,
                   path: basePath,
                   stage,
-                  awsProfile
-                }))
+                  awsProfile,
+                })),
               };
           o[k] = r;
         }
@@ -79,8 +80,8 @@ const makeConfig = async ({
           ...cmd,
           path: currentPath,
           stage,
-          awsProfile
-        }))
+          awsProfile,
+        })),
       };
     }
     o = Object.entries(o).reduce((out, [key, value]) => {
@@ -108,5 +109,5 @@ module.exports = {
   writeConfig,
   getAccountID,
   makeConfig,
-  getResources
+  getResources,
 };
