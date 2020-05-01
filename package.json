@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/rhdeck/serverless-setup#readme",
   "dependencies": {
-    "@raydeck/serverless-resources": "^2.0.0",
+    "@raydeck/serverless-resources": "^2.0.2",
     "@raydeck/serverless-stage": "^2.0.0",
     "aws-sdk": "^2.637.0",
     "mustache": "^4.0.0"
