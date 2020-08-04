@@ -27,72 +27,79 @@ const makeConfig = async ({
   const oldPath = process.cwd();
   process.chdir(currentPath);
   let o = { awsAccountId };
-  //open the package.json\
+  //open the package.json
   const packagePath = join("package.json");
   if (existsSync(packagePath)) {
     let { name, version, serverless: rawServerless } = JSON.parse(
       readFileSync(packagePath, { encoding: "UTF8" })
     );
-    o = { ...o, name, version };
-    if (rawServerless) {
-      let { dependencies, name: serverlessName, ...serverless } = rawServerless;
-      if (serverlessName) o.name = serverlessName;
-      let stagedServerless = serverless[stage] ? serverless[stage] : {};
-      let namedServerless =
-        fromName && serverless[fromName] ? serverless[fromName] : {};
-      o = { ...o, ...serverless, ...stagedServerless, ...namedServerless };
-      if (dependencies) {
-        for (let [k, path] of Object.entries(dependencies)) {
-          //Make sure its config is up to date
-          path = resolve(path);
-          const basePath = lstatSync(path).isDirectory ? path : dirname(path);
-          let config = await makeConfig({
-            ...cmd,
-            currentPath: basePath,
-            ignoreResources,
-            stage,
-            awsProfile,
-            name: fromName,
-          });
-          if (!existsSync(join(basePath, "config.json")))
-            writeConfig(config, basePath);
-          let r = ignoreResources
-            ? {
-                ...config,
-              }
-            : {
-                ...config,
-                ...(await getResources({
-                  ...cmd,
-                  path: basePath,
-                  stage,
-                  awsProfile,
-                })),
-              };
-          o[k] = r;
-        }
-      }
-    }
-    if (getMyResources) {
-      o = {
-        ...o,
-        ...(await getResources({
+    o = { ...o, name, version, serverless: rawServerless };
+  }
+  //Now let's looks for the serverless.config.js
+  if (existsSync("serverless.config.js")) {
+    o = { ...o, ...require("serverless.config.js") };
+  }
+  if (existsSync(".serverlessrc")) {
+    o = { ...o, ...require(".serverlessrc") };
+  }
+  if (rawServerless) {
+    let { dependencies, name: serverlessName, ...serverless } = rawServerless;
+    if (serverlessName) o.name = serverlessName;
+    let stagedServerless = serverless[stage] ? serverless[stage] : {};
+    let namedServerless =
+      fromName && serverless[fromName] ? serverless[fromName] : {};
+    o = { ...o, ...serverless, ...stagedServerless, ...namedServerless };
+    if (dependencies) {
+      for (let [k, path] of Object.entries(dependencies)) {
+        //Make sure its config is up to date
+        path = resolve(path);
+        const basePath = lstatSync(path).isDirectory ? path : dirname(path);
+        let config = await makeConfig({
           ...cmd,
-          path: currentPath,
+          currentPath: basePath,
+          ignoreResources,
           stage,
           awsProfile,
-        })),
-      };
-    }
-    o = Object.entries(o).reduce((out, [key, value]) => {
-      if (typeof value === "string") {
-        const newValue = mustache.render(value, { ...o, output: out });
-        return { ...out, [key]: newValue };
-      } else {
-        return { ...out, [key]: value };
+          name: fromName,
+        });
+        if (!existsSync(join(basePath, "config.json")))
+          writeConfig(config, basePath);
+        let r = ignoreResources
+          ? {
+              ...config,
+            }
+          : {
+              ...config,
+              ...(await getResources({
+                ...cmd,
+                path: basePath,
+                stage,
+                awsProfile,
+              })),
+            };
+        o[k] = r;
       }
-    }, {});
+    }
   }
+  if (getMyResources) {
+    o = {
+      ...o,
+      ...(await getResources({
+        ...cmd,
+        path: currentPath,
+        stage,
+        awsProfile,
+      })),
+    };
+  }
+  o = Object.entries(o).reduce((out, [key, value]) => {
+    if (typeof value === "string") {
+      const newValue = mustache.render(value, { ...o, output: out });
+      return { ...out, [key]: newValue };
+    } else {
+      return { ...out, [key]: value };
+    }
+  }, {});
   process.chdir(oldPath);
   return o;
 };
