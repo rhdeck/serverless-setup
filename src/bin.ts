@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-const commander = require("commander");
-const { makeConfig, writeConfig } = require("./");
+import commander from "commander";
+import { makeConfig, writeConfig } from ".";
 commander
   .description("Create config.json")
   .option(
@@ -21,7 +21,7 @@ commander
     "Write to standard output instead of config.json"
   )
   .option(
-    "-n --name <stackname>",
+    "-n --stack-name <stackname>",
     "Name of the stack/application (e.g. privilege, test-a, etc)"
   )
   .action(
@@ -32,12 +32,17 @@ commander
       standardOutput,
       awsProfile,
       stage = "dev",
-      name
+      stackName,
     }) => {
       fileName = fileName && "config.json";
       targetPath = targetPath && process.cwd();
       try {
-        const c = await makeConfig({ currentPath, stage, awsProfile, name });
+        const c = await makeConfig({
+          currentPath,
+          stage,
+          awsProfile,
+          name: stackName,
+        });
         if (standardOutput) {
           console.log(JSON.stringify(c, null, 2));
         } else {
@@ -53,3 +58,4 @@ commander
     }
   )
   .parse(process.argv);
+export { commander };

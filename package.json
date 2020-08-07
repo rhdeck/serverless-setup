@@ -2,9 +2,13 @@
   "name": "@raydeck/serverless-setup",
   "version": "2.2.0",
   "description": "Utility for setting up a serverless config",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pre-commit": "(git-branch-is --not main || (set -u && echo $ALLOWMAIN)) && yarn test",
+    "test": "tsc --noEmit",
+    "build": "tsc && chmod +x lib/bin.js",
+    "docs": "typedoc --theme markdown --readme none --mode file  --excludeNotExported --includeVersion --out docstemp && mv docstemp/README.md docstemp/library.md && commanderdoc markdown lib/bin.js -o docstemp/__cli.md --cli-name serverless-setup && rm README.md ; concat-md docstemp > README.md && rm -rf docstemp",
+    "prepublishOnly": "yarn docs && yarn build"
   },
   "repository": {
     "type": "git",
@@ -21,22 +25,33 @@
   },
   "homepage": "https://github.com/rhdeck/serverless-setup#readme",
   "dependencies": {
-    "@raydeck/serverless-resources": "^2.0.2",
-    "@raydeck/serverless-stage": "^2.0.0",
-    "aws-sdk": "^2.637.0",
+    "@raydeck/serverless-base": "^1.0.2",
+    "@raydeck/serverless-resources": "^3.0.1",
+    "@raydeck/serverless-stage": "^3.0.1",
+    "aws-sdk": "^2.728.0",
+    "commanderdoc": "^0.1.4",
     "mustache": "^4.0.0"
   },
-  "bin": {
-    "serverless-setup": "cli.js"
-  },
+  "bin": "lib/bin.js",
   "devDependencies": {
     "@commitlint/cli": "^9.1.1",
     "@commitlint/config-conventional": "^9.1.1",
-    "husky": "^4.2.5"
+    "@types/mustache": "^4.0.1",
+    "@types/node": "^14.0.27",
+    "concat-md": "^0.3.5",
+    "git-branch-is": "^4.0.0",
+    "husky": "^4.2.5",
+    "typedoc": "^0.17.0-3",
+    "typedoc-plugin-markdown": "^2.4.0",
+    "typescript": "^3.9.7"
   },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
-  }
+  },
+  "files": [
+    "src",
+    "lib"
+  ]
 }
