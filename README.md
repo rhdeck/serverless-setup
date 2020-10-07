@@ -6,17 +6,18 @@
 serverless-setup [options]
 ```
 # Options
-* -p --currentPath \<`pathname`> Reference path for examining a serverlesss setup 
-* -t --stage \<`stage`> Stack stage to check against. Defaul value is dev 
+* -p --currentPath \<`pathname`> Reference path for examining a serverlesss setup (default: .
+* -t --stage \<`stage`> Stack stage to check against. Defaul value is dev (default: dev
 * -a --aws-profile \<`profile`> Named AWS Profile 
-* -f --file-name [filename] File to write output (default config.json) 
+* -f --file-name [filename] File to write output (default config.json) (default: config.json
 * -s --standard-output Write to standard output instead of config.json 
 * -n --stack-name \<`stackname`> Name of the stack/application (e.g. privilege, test-a, etc) 
+* -r --region \<`region`> Region to pass to serverless commands 
 
 <a name="librarymd"></a>
 
 
-# @raydeck/serverless-setup - v3.0.0
+# @raydeck/serverless-setup - v3.1.0
 
 ## Index
 
@@ -36,7 +37,7 @@ serverless-setup [options]
 
 • **cachedAccountId**: *string | undefined*
 
-*Defined in [index.ts:8](https://github.com/rhdeck/serverless-setup/blob/e517068/src/index.ts#L8)*
+*Defined in [index.ts:8](https://github.com/rhdeck/serverless-setup/blob/8da9d7d/src/index.ts#L8)*
 
 ## Functions
 
@@ -44,7 +45,7 @@ serverless-setup [options]
 
 ▸ **getAccountID**(): *Promise‹string›*
 
-*Defined in [index.ts:9](https://github.com/rhdeck/serverless-setup/blob/e517068/src/index.ts#L9)*
+*Defined in [index.ts:9](https://github.com/rhdeck/serverless-setup/blob/8da9d7d/src/index.ts#L9)*
 
 **Returns:** *Promise‹string›*
 
@@ -54,7 +55,7 @@ ___
 
 ▸ **makeConfig**(`__namedParameters`: object): *Promise‹object›*
 
-*Defined in [index.ts:16](https://github.com/rhdeck/serverless-setup/blob/e517068/src/index.ts#L16)*
+*Defined in [index.ts:16](https://github.com/rhdeck/serverless-setup/blob/8da9d7d/src/index.ts#L16)*
 
 **Parameters:**
 
@@ -62,12 +63,13 @@ ___
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`awsProfile` | string | - |
+`awsProfile` | undefined &#124; string | - |
 `cmd` | cmd | - |
 `currentPath` | string | process.cwd() |
 `fromName` | string | - |
 `getMyResources` | boolean | false |
 `ignoreResources` | boolean | false |
+`region` | undefined &#124; string | - |
 `stage` | string | "dev" |
 
 **Returns:** *Promise‹object›*
@@ -78,7 +80,7 @@ ___
 
 ▸ **writeConfig**(`fromObject`: object, `toPath`: string, `fileName`: string): *boolean*
 
-*Defined in [index.ts:106](https://github.com/rhdeck/serverless-setup/blob/e517068/src/index.ts#L106)*
+*Defined in [index.ts:109](https://github.com/rhdeck/serverless-setup/blob/8da9d7d/src/index.ts#L109)*
 
 **Parameters:**
 

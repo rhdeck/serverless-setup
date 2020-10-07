@@ -27,7 +27,7 @@
   "dependencies": {
     "@raydeck/serverless-base": "^1.0.2",
     "@raydeck/serverless-resources": "^3.0.1",
-    "@raydeck/serverless-stage": "^3.0.1",
+    "@raydeck/serverless-stage": "^3.1.0",
     "aws-sdk": "^2.728.0",
     "commanderdoc": "^0.1.4",
     "mustache": "^4.0.0"
