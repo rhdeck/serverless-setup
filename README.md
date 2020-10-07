@@ -16,7 +16,7 @@ serverless-setup [options]
 <a name="librarymd"></a>
 
 
-# @raydeck/serverless-setup - v2.2.0
+# @raydeck/serverless-setup - v3.0.0
 
 ## Index
 
@@ -36,7 +36,7 @@ serverless-setup [options]
 
 • **cachedAccountId**: *string | undefined*
 
-Defined in index.ts:8
+*Defined in [index.ts:8](https://github.com/rhdeck/serverless-setup/blob/e517068/src/index.ts#L8)*
 
 ## Functions
 
@@ -44,7 +44,7 @@ Defined in index.ts:8
 
 ▸ **getAccountID**(): *Promise‹string›*
 
-Defined in index.ts:9
+*Defined in [index.ts:9](https://github.com/rhdeck/serverless-setup/blob/e517068/src/index.ts#L9)*
 
 **Returns:** *Promise‹string›*
 
@@ -54,7 +54,7 @@ ___
 
 ▸ **makeConfig**(`__namedParameters`: object): *Promise‹object›*
 
-Defined in index.ts:16
+*Defined in [index.ts:16](https://github.com/rhdeck/serverless-setup/blob/e517068/src/index.ts#L16)*
 
 **Parameters:**
 
@@ -78,7 +78,7 @@ ___
 
 ▸ **writeConfig**(`fromObject`: object, `toPath`: string, `fileName`: string): *boolean*
 
-Defined in index.ts:106
+*Defined in [index.ts:106](https://github.com/rhdeck/serverless-setup/blob/e517068/src/index.ts#L106)*
 
 **Parameters:**
 

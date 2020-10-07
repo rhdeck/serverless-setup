@@ -6,7 +6,7 @@
   "scripts": {
     "pre-commit": "(git-branch-is --not main || (set -u && echo $ALLOWMAIN)) && yarn test",
     "test": "tsc --noEmit",
-    "build": "tsc && chmod +x lib/bin.js",
+    "build": "tsc && chmod +x lib/bin.js && yarn pack -f package.tgz",
     "docs": "typedoc --theme markdown --readme none --mode file  --excludeNotExported --includeVersion --out docstemp && mv docstemp/README.md docstemp/library.md && commanderdoc markdown lib/bin.js -o docstemp/__cli.md --cli-name serverless-setup && rm README.md ; concat-md docstemp > README.md && rm -rf docstemp",
     "prepublishOnly": "yarn docs && yarn build"
   },

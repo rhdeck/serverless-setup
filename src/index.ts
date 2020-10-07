@@ -18,6 +18,7 @@ export const makeConfig = async ({
   getMyResources = false,
   ignoreResources = false,
   stage = "dev",
+  region,
   awsProfile,
   name: fromName,
   ...cmd
@@ -26,8 +27,9 @@ export const makeConfig = async ({
   getMyResources?: boolean;
   ignoreResources?: boolean;
   stage: string;
-  awsProfile: string;
+  awsProfile?: string;
   name: string;
+  region?: string;
   cmd?: { [key: string]: any };
 }) => {
   let awsAccountId = await getAccountID();
@@ -59,6 +61,7 @@ export const makeConfig = async ({
         stage,
         awsProfile,
         name: fromName,
+        region,
       });
       if (!existsSync(join(basePath, "config.json")))
         writeConfig(config, basePath);
